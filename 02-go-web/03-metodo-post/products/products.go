@@ -44,7 +44,7 @@ func LoadProducts(filename string) ([]Product, error) {
 
 func GetProductByIDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		products, err := LoadProducts("products.json")
+		products, err := LoadProducts("cmd/products.json")
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Header().Set("Content-Type", "application/json")
@@ -76,7 +76,7 @@ func GetProductByIDHandler() http.HandlerFunc {
 
 func GetAllProductsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		products, err := LoadProducts("products.json")
+		products, err := LoadProducts("cmd/products.json")
 		if err != nil {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusInternalServerError)
@@ -91,7 +91,7 @@ func GetAllProductsHandler() http.HandlerFunc {
 
 func SearchProductsHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		products, err := LoadProducts("products.json")
+		products, err := LoadProducts("cmd/products.json")
 		if err != nil {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusInternalServerError)
@@ -140,7 +140,7 @@ func AddProductHandler() http.HandlerFunc {
 			return
 		}
 
-		products, err := LoadProducts("products.json")
+		products, err := LoadProducts("cmd/products.json")
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(Response{Message: "Failed to load products", Error: err.Error()})
@@ -184,7 +184,7 @@ func AddProductHandler() http.HandlerFunc {
 			return
 		}
 
-		err = os.WriteFile("products.json", data, 0644)
+		err = os.WriteFile("cmd/products.json", data, 0644)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(Response{Message: "Failed to write products to file", Error: err.Error()})
